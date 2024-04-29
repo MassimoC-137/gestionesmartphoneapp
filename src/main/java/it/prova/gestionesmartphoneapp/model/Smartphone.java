@@ -3,7 +3,6 @@ package it.prova.gestionesmartphoneapp.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,18 +26,18 @@ public class Smartphone {
 	@Column(name="modello")
 	private String modello; 
 	@Column(name="prezzo")
-	private Float prezzo; 
+	private int prezzo; 
 	@Column(name="versione_os")
 	private String versioneOS; 
 	
-	@ManyToMany(mappedBy = "smartphone", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<App> app = new HashSet<App>(); 
+	@ManyToMany(fetch = FetchType.LAZY , mappedBy = "smartphones")
+	private Set<App> apps = new HashSet<App>();
 	
 	public Smartphone() {
 		
 	}
 	
-	public Smartphone(String marca, String modello, Float prezzo, String versioneOS) {
+	public Smartphone(String marca, String modello, int prezzo, String versioneOS) {
 		
 	}
 
@@ -66,11 +65,11 @@ public class Smartphone {
 		this.modello = modello;
 	}
 
-	public Float getPrezzo() {
+	public int getPrezzo() {
 		return prezzo;
 	}
 
-	public void setPrezzo(Float prezzo) {
+	public void setPrezzo(int prezzo) {
 		this.prezzo = prezzo;
 	}
 
@@ -80,6 +79,14 @@ public class Smartphone {
 
 	public void setVersioneOS(String versioneOS) {
 		this.versioneOS = versioneOS;
+	}
+
+	public Set<App> getApps() {
+		return apps;
+	}
+
+	public void setApps(Set<App> apps) {
+		this.apps = apps;
 	}
 
 	@Override
