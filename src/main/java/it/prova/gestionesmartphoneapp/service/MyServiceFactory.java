@@ -14,7 +14,6 @@ public class MyServiceFactory {
 		appServiceInstance.setAppDAO(MyDAOFactory.getAppDAOInstance());
 		
 		return appServiceInstance;
-
 	}
 	
 	public static SmartphoneService getSmartphoneServiceInstance() {
@@ -25,4 +24,5 @@ public class MyServiceFactory {
 		
 		return smartphoneServiceInstance;
 	}
+	
 }

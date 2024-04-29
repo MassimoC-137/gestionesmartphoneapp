@@ -1,7 +1,5 @@
 package it.prova.gestionesmartphoneapp.dao;
 
-
-
 public class MyDAOFactory {
 
 	private static AppDAO appDAOInstance = null; 
@@ -15,14 +13,10 @@ public class MyDAOFactory {
 		return appDAOInstance;
 	}
 
-
-
 	public static SmartphoneDAO getSmartphoneDAOInstance() {
 		if (smartphoneDAOInstance == null)
 			smartphoneDAOInstance = new SmartphoneDAOImpl(); 
 		return smartphoneDAOInstance;
 	}
-	
-	
 	
 }

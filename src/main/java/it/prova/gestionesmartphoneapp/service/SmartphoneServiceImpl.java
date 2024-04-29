@@ -3,10 +3,13 @@ package it.prova.gestionesmartphoneapp.service;
 import java.util.List;
 
 import it.prova.gestionesmartphoneapp.dao.SmartphoneDAO;
+import it.prova.gestionesmartphoneapp.dao.SmartphoneDAOImpl;
 import it.prova.gestionesmartphoneapp.model.App;
 import it.prova.gestionesmartphoneapp.model.Smartphone;
 
 public class SmartphoneServiceImpl implements SmartphoneService {
+	
+	private SmartphoneDAO smartphoneDAOInstance = new SmartphoneDAOImpl();
 
 	@Override
 	public List<Smartphone> list() throws Exception {
