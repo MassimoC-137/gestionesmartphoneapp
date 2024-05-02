@@ -12,19 +12,21 @@ import it.prova.gestionesmartphoneapp.service.SmartphoneService;
 public class TestGestione {
 
 	public static void main(String[] args) {
-        AppService appServiceInstance = MyServiceFactory.getAppServiceInstance();
-        SmartphoneService smartphoneServiceInstance = MyServiceFactory.getSmartphoneServiceInstance();
+		AppService appServiceInstance = MyServiceFactory.getAppServiceInstance();
+		SmartphoneService smartphoneServiceInstance = MyServiceFactory.getSmartphoneServiceInstance();
 
-        try {
-//            testInsertApp(appServiceInstance);
-//            stampaContenutoDB(appServiceInstance, smartphoneServiceInstance);
-            testListApp(appServiceInstance);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        } finally {
-            EntityManagerUtil.shutdown();
-        }
-    }
+		try {
+//			testInsertApp(appServiceInstance);
+//			stampaContenutoDB(appServiceInstance, smartphoneServiceInstance);
+//			testListApp(appServiceInstance);
+//			testGetApp(appServiceInstance); 
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+		} finally {
+			EntityManagerUtil.shutdown();
+		}
+	}
 
 //		public List<Smartphone> testListSmartphone() throws Exception {
 //			
@@ -63,34 +65,47 @@ public class TestGestione {
 //		}
 //
 	private static void testListApp(AppService appServiceInstance) throws Exception {
-			System.out.println("Inizio test lista app.");
-			try {
-				List<App> listaApp = appServiceInstance.list(); 
-					for (App app : listaApp) {
-						System.out.println(app.toString());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		System.out.println("Inizio test lista app.");
+		try {
+			List<App> listaApp = appServiceInstance.list();
+			for (App app : listaApp) {
+				System.out.println(app.toString());
 			}
-		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-//		public App testGetApp(Long id) throws Exception {
-//			
-//		}
-//
-//		public void testUpdateApp(AppService appServiceInstance) throws Exception {
-//			
-//		}
-//
+	private static App testGetApp(AppService appServiceInstance) throws Exception {
+		System.out.println("Inizio test get app.");
+	    try {
+	        App app = appServiceInstance.get(4L);
+	        if (app != null) {
+	            System.out.println("App trovata: " + app);
+	            return app;
+	        } else {
+	            System.out.println("Nessuna app trovata con l'ID: " + 4L);
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Errore durante il recupero dell'app: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
+
+	private static void testUpdateApp(AppService appServiceInstance) throws Exception {
+			System.out.println("Inizio test update app.");
+			
+		}
+
 	private static void testInsertApp(AppService appServiceInstance) throws Exception {
-        System.out.println("Inizio test inserimento nuova app.");
-        LocalDate dataInstallazione = LocalDate.of(2024, 4, 29);
-        LocalDate dataAggiornamento = LocalDate.of(2024, 4, 25);
-        App nuovaApp = new App("Kraken", dataInstallazione, dataAggiornamento, "4.12.0");
-        appServiceInstance.insert(nuovaApp);
-        System.out.println("Fine testInsertApp: SUCCESS, l'inserimento è avvenuto.");
-    }
+		System.out.println("Inizio test inserimento nuova app.");
+		LocalDate dataInstallazione = LocalDate.of(2024, 4, 29);
+		LocalDate dataAggiornamento = LocalDate.of(2024, 4, 25);
+		App nuovaApp = new App("Kraken", dataInstallazione, dataAggiornamento, "4.13.0");
+		appServiceInstance.insert(nuovaApp);
+		System.out.println("Fine testInsertApp: SUCCESS, l'inserimento è avvenuto.");
+	}
 //
 //		public void testDeleteApp(AppService appServiceInstance) throws Exception {
 //			
@@ -108,9 +123,8 @@ public class TestGestione {
 //			
 //		}
 //		
-//		private static void stampaContenutoDB(AppService appServiceInstance, SmartphoneService smartphoneServiceInstance) throws Exception {
-//			System.out.println("Nel database ci sono " + appServiceInstance.list().size() + " app e "
-//					+ smartphoneServiceInstance.list().size() + " smartphone.");
-//		}
-	}
-
+		private static void stampaContenutoDB(AppService appServiceInstance, SmartphoneService smartphoneServiceInstance) throws Exception {
+			System.out.println("Nel database ci sono " + appServiceInstance.list().size() + " app e "
+					+ smartphoneServiceInstance.list().size() + " smartphone.");
+		}
+}
