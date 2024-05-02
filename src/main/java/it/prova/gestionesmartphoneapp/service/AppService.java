@@ -16,7 +16,7 @@ public interface AppService {
 
 	public void insert(App input) throws Exception;
 
-	public void delete(App input) throws Exception;
+	public void delete(Long id) throws Exception;
 
 	public void updateDataAggiornamento(Long id) throws Exception;
 

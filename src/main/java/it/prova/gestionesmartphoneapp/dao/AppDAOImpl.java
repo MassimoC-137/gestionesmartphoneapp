@@ -1,5 +1,6 @@
 package it.prova.gestionesmartphoneapp.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -52,18 +53,32 @@ public class AppDAOImpl implements AppDAO{
 
 	@Override
 	public void updateDataAggiornamento(Long id) throws Exception {
-		// TODO Auto-generated method stub
+		if (id == null || id < 1)
+	        throw new Exception("ID non valido o mancante.");
+	    App app = entityManager.find(App.class, id);
+	    if (app == null)
+	        throw new Exception("Nessuna app trovata con l'ID specificato.");
+
+	    app.setDataUltimoAggiornamento(LocalDate.now());
+	    entityManager.merge(app);
 	}
 
 	@Override
 	public void insertSmartphone(Smartphone smartphone) throws Exception {
-		// TODO Auto-generated method stub
+		if (smartphone == null)
+	        throw new Exception("Impossibile eseguire l'operazione, smartphone mancante.");
+	    entityManager.persist(smartphone);
 	}
 
 	@Override
 	public App getPerNome(String nome) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if (nome == null || nome.trim().isEmpty())
+	        throw new Exception("Impossibile effettuare la ricerca, nome mancante o non valido.");
+	    return entityManager.createQuery("from App where nome = :nome", App.class)
+	                        .setParameter("nome", nome)
+	                        .getResultStream()
+	                        .findFirst()
+	                        .orElse(null);
 	}
 
 }

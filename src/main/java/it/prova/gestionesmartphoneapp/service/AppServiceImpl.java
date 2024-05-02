@@ -11,7 +11,7 @@ import it.prova.gestionesmartphoneapp.model.App;
 import it.prova.gestionesmartphoneapp.model.Smartphone;
 
 public class AppServiceImpl implements AppService {
-	
+
 	private AppDAO appDAOInstance = new AppDAOImpl();
 
 	@Override
@@ -44,8 +44,19 @@ public class AppServiceImpl implements AppService {
 
 	@Override
 	public void update(App input) throws Exception {
-		// TODO Auto-generated method stub
-		
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			appDAOInstance.setEntityManager(entityManager);
+			entityManager.getTransaction().begin();
+			appDAOInstance.update(input);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
@@ -66,35 +77,75 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
-	public void delete(App input) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void delete(Long id) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			App appDaEliminare = entityManager.find(App.class, id);
+			if (appDaEliminare != null) {
+				entityManager.remove(appDaEliminare);
+			} else {
+				System.out.println("App con ID " + id + " non trovata e non può essere eliminata.");
+			}
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
 	public void updateDataAggiornamento(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			appDAOInstance.setEntityManager(entityManager);
+			entityManager.getTransaction().begin();
+			appDAOInstance.updateDataAggiornamento(id);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
 	public void insertSmartphone(Smartphone smartphone) throws Exception {
-		// TODO Auto-generated method stub
-		
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			entityManager.persist(smartphone);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
 	public App getPerNome(String nome) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			appDAOInstance.setEntityManager(entityManager);
+			return appDAOInstance.getPerNome(nome);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
 	}
 
 	@Override
 	public void setAppDAO(AppDAO appDAOInstance) {
-		// TODO Auto-generated method stub
-		
+		this.appDAOInstance = appDAOInstance;
 	}
-
-	
 
 }

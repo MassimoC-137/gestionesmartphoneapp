@@ -38,7 +38,10 @@ public class Smartphone {
 	}
 	
 	public Smartphone(String marca, String modello, int prezzo, String versioneOS) {
-		
+		this.marca = marca; 
+		this.modello = modello; 
+		this.prezzo = prezzo; 
+		this.versioneOS = versioneOS; 
 	}
 
 	public Long getId() {
