@@ -33,9 +33,8 @@ public class App {
 	@Column(name="versione")
 	private String versione; 
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "app_smartphone", joinColumns = @JoinColumn(name = "app_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "smartphone_id", referencedColumnName = "ID"))
-	private Set<Smartphone> smartphones = new HashSet<Smartphone>();
+	@ManyToMany(mappedBy = "apps", fetch = FetchType.LAZY)
+	private Set<Smartphone> smartphones = new HashSet<>();
 	
 	public App() {
 		

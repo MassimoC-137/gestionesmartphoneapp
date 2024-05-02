@@ -2,6 +2,7 @@ package it.prova.gestionesmartphoneapp.model;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -30,8 +33,10 @@ public class Smartphone {
 	@Column(name="versione_os")
 	private String versioneOS; 
 	
-	@ManyToMany(fetch = FetchType.LAZY , mappedBy = "smartphones")
-	private Set<App> apps = new HashSet<App>();
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "app_smartphone", joinColumns = @JoinColumn(name = "smartphone_id"), inverseJoinColumns = @JoinColumn(name = "app_id"))
+	private Set<App> apps = new HashSet<>();
+
 	
 	public Smartphone() {
 		
@@ -94,8 +99,11 @@ public class Smartphone {
 
 	@Override
 	public String toString() {
-		return "Smartphone [id=" + id + ", marca=" + marca + ", modello=" + modello + ", prezzo=" + prezzo
-				+ ", versioneOS=" + versioneOS + "]";
+	    return "Smartphone [id=" + id + ", marca=" + marca + ", modello=" + modello + ", prezzo=" + prezzo
+	            + ", versioneOS=" + versioneOS + ", apps=" + apps.stream()
+	                                                            .map(App::toString)
+	                                                            .collect(Collectors.joining(", ")) + "]";
 	}
+
 	
 }

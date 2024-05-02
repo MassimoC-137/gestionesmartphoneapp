@@ -18,13 +18,13 @@ public interface SmartphoneService {
 
 	public void delete(Smartphone input) throws Exception;
 
-	public Smartphone getElementoEagerFetchingApps() throws Exception;
+	public Smartphone getElementoEagerFetchingApps(Long id) throws Exception;
 
-	public Smartphone updateVersioneOS() throws Exception;
+	public void updateVersioneOS(Long id, String versioneOS) throws Exception;
 
-	public Smartphone insertApp(App app) throws Exception;
+	public void insertApp(Long smartphoneId, App app) throws Exception;
 
-	public Smartphone removeApp(App app) throws Exception;
+	public void removeApp(Long smartphoneId, App app) throws Exception;
 
 	public void setSmartphoneDAO(SmartphoneDAO smartphoneDAOInstance);
 
